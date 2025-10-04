@@ -6,14 +6,64 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!-- 原有切换按钮（仅修改文字） -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/tun_switch_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="启动拦截"  <!-- 仅修改按钮文字 -->
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginTop="30dp"/>
+
+    <!-- 新增：IP拦截列表区域 -->
+    <TextView
+        android:id="@+id/ip_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="拦截IP列表："
+        app:layout_constraintTop_toBottomOf="@id/tun_switch_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintMarginStart="20dp"
+        app:layout_constraintMarginTop="20dp"/>
+
+    <!-- 新增：IP输入框（一行一个） -->
+    <EditText
+        android:id="@+id/ip_input"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="输入IP地址"
+        android:inputType="textUri"
+        app:layout_constraintTop_toBottomOf="@id/ip_list_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginStart="20dp"
+        app:layout_constraintMarginEnd="20dp"/>
+
+    <!-- 新增：已添加的IP列表展示 -->
+    <ListView
+        android:id="@+id/ip_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"  <!-- 固定高度避免覆盖其他元素 -->
+        app:layout_constraintTop_toBottomOf="@id/ip_input"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginTop="10dp"
+        app:layout_constraintMarginStart="20dp"
+        app:layout_constraintMarginEnd="20dp"/>
+
+    <!-- 新增：保存按钮 -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/save_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="保存拦截列表"
+        app:layout_constraintTop_toBottomOf="@id/ip_list_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintMarginTop="20dp"/>
+
+    <!-- 原有其他布局元素保持不变 -->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
