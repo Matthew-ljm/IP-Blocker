@@ -1,125 +1,225 @@
-#include "tunmode/tunmode.hpp" // 修复1：删除多余的`<`，用双引号（项目内部头文件标准用法）
-#include <sys/poll.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <mutex>
-#include <vector>
+#include <tunmode/tunmode.hpp>
+#include <tunmode/socket/sessionsocket.hpp>
+#include <tunmode/manager/tcpmanager.hpp>
+#include <tunmode/manager/udpmanager.hpp>
+
+#include <future>
 #include <string>
-#include <sstream>
-#include <cstring>
-// 修复2：删除不存在的<<tunmode/tunsocket.hpp>引入，复用tunmode.hpp（假设TunSocket已在其中声明）
+#include <vector>
+#include <thread>
 
-namespace tunmode {
-    // 1. 与头文件extern声明匹配，删除static（避免重复定义）
-    std::atomic<bool> stop_flag(false);
-    TunSocket tun; // 若tunmode.hpp已声明TunSocket，此处可直接使用
+#include <poll.h>
+#include <unistd.h>
+// 新增：解析IP需要的系统头文件（不影响原有逻辑）
+#include <netinet/ip.h>
+#include <arpa/inet.h>
 
-    // 新增：动态IP拦截列表及线程锁
-    static std::vector<std::string> blocked_ips;
-    static std::mutex ip_mutex;
+#include <misc/logger.hpp>
 
-    // 新增：更新IP拦截列表的函数
-    void update_blocked_ips(const std::vector<std::string>& new_ips) {
-        std::lock_guard<std::mutex> lock(ip_mutex);
-        blocked_ips = new_ips;
-    }
+namespace tunmode
+{
+	namespace params
+	{
+		JavaVM* jvm;
+		TunSocket tun;
+		in_addr net_iface;
+		in_addr dns_address;
+		jobject TunModeService_object;
+		std::atomic<bool> stop_flag;
 
-    // 原有线程控制函数（保留项目实际实现）
-    void _thread_start() {
-        // 项目原有_thread_start逻辑（如无则留空）
-    }
+		std::promise<void> tunnel_promise;
+		std::atomic<int> thread_count;
+	}
 
-    void _thread_stop() {
-        // 项目原有_thread_stop逻辑（如无则留空）
-    }
+	TCPManager tcp_session_manager;
+	UDPManager udp_session_manager;
 
-    // 隧道主循环（修复TunSocket用法）
-    void _tunnel_loop() {
-        _thread_start();
+	void set_jvm(JavaVM* jvm)
+	{
+		params::jvm = jvm;
+	}
 
-        struct pollfd fds[1];
-        // 假设TunSocket用fd()获取文件描述符（若项目用其他方法，替换为实际函数名）
-        fds[0].fd = tun.fd();
-        fds[0].events = POLLIN;
+	void initialize(JNIEnv* env, jobject TunModeService_object)
+	{
+		params::tun = 0;
+		SessionSocket::tun = &params::tun;
+		params::TunModeService_object = env->NewGlobalRef(TunModeService_object);
 
-        while (!stop_flag.load()) {
-            int ret = poll(fds, 1, 1000);
-            if (ret < 0) {
-                break; // 错误处理（保留原有逻辑）
-            }
 
-            if (fds[0].revents & POLLIN) {
-                Packet packet;
-                // 假设TunSocket用read()读取数据包（替换为项目实际读取方法）
-                ssize_t read_len = tun.read(packet.get_buffer(), packet.get_capacity());
-                if (read_len <= 0) {
-                    continue; // 读取失败处理
-                }
-                packet.set_size(static_cast<size_t>(read_len)); // 设置数据包长度
+		params::stop_flag.store(false);
+		params::thread_count.store(0);
+	}
 
-                bool drop_packet = false;
-                if (packet.get_size() >= sizeof(ip)) {
-                    const ip* ip_header = reinterpret_cast<const ip*>(packet.get_buffer());
-                    struct in_addr dest_addr;
-                    dest_addr.s_addr = ip_header->ip_dst.s_addr;
-                    char* dest_ip_str = inet_ntoa(dest_addr);
+	int get_jni_env(JNIEnv** env)
+	{
+		int status = params::jvm->GetEnv((void**)env, JNI_VERSION_1_6);
 
-                    // 动态IP拦截判断
-                    std::lock_guard<std::mutex> lock(ip_mutex);
-                    for (const auto& blocked_ip : blocked_ips) {
-                        if (std::strcmp(dest_ip_str, blocked_ip.c_str()) == 0) {
-                            drop_packet = true;
-                            break;
-                        }
-                    }
-                }
+		if (status == JNI_EDETACHED) {
+			if (params::jvm->AttachCurrentThread(env, nullptr) != 0) {
+				return 2; // Failed to attach
+			}
+			return 1; // Attached, need detach
+		}
 
-                if (drop_packet) {
-                    continue; // 丢弃数据包
-                }
+		return 0; // Already attached
+	}
 
-                // 原有数据包转发逻辑（如用write发送，替换为项目实际方法）
-                // tun.write(packet.get_buffer(), packet.get_size());
-            }
-        }
+	void _thread_start()
+	{
+		params::thread_count++;
+	}
 
-        _thread_stop();
-    }
+	void _thread_stop()
+	{
+		int val = params::thread_count.fetch_sub(1) - 1;
 
-    // 保留项目原有其他函数
-    // ...
-}
+		if (val == 0)
+		{
+			params::tunnel_promise.set_value();
+		}
+	}
 
-// JNI方法实现（不变）
-extern "C" JNIEXPORT void JNICALL
-Java_git_gxosty_tunmode_interceptor_activities_MainActivity_updateBlockedIpsInNative(
-        JNIEnv* env, jobject thiz) {
-    jclass mainActivityClass = env->GetObjectClass(thiz);
-    jmethodID getIpListMethod = env->GetMethodID(
-            mainActivityClass, 
-            "getIpListAsString", 
-            "()Ljava/lang/String;"
-    );
-    if (getIpListMethod == nullptr) {
-        return;
-    }
-    jstring ipListJString = (jstring)env->CallObjectMethod(thiz, getIpListMethod);
-    if (ipListJString == nullptr) {
-        return;
-    }
+	void _tunnel_loop()
+	{
+		// 【新增1：写死拦截IP名单，替换成你的目标IP】
+		const char* blocked_ips[] = {"185.199.108.153"};
+		const int blocked_count = sizeof(blocked_ips) / sizeof(blocked_ips[0]);
 
-    const char* ipListChars = env->GetStringUTFChars(ipListJString, nullptr);
-    std::string ipListStr(ipListChars);
-    env->ReleaseStringUTFChars(ipListJString, ipListChars);
+		_thread_start();
 
-    std::vector<std::string> newIpList;
-    std::istringstream iss(ipListStr);
-    std::string ip;
-    while (std::getline(iss, ip, ',')) {
-        if (!ip.empty()) {
-            newIpList.push_back(ip);
-        }
-    }
+		while (!params::stop_flag.load())
+		{
+			int revents = 0;
+			int ret = params::tun.poll(2000, revents);
 
-    tunmode::update_blocked_ips(newIpList);
+			if (ret == -1)
+			{
+				break;
+			}
+			else if (ret == 0)
+			{
+				continue;    // Timeout reached
+			}
+			else
+			{
+				if (revents & POLLIN)
+				{
+					Packet packet;
+					params::tun > packet;
+
+					// 【新增2：解析目的IP + 判断是否拦截】
+					bool drop_packet = false;
+					// 确保数据包长度足够解析IP头（避免越界）
+					if (packet.get_size() >= sizeof(ip))
+					{
+						// 解析IP头中的目的IP（复用系统结构体，不修改原有Packet逻辑）
+						const ip* ip_header = reinterpret_cast<const ip*>(packet.get_buffer());
+						struct in_addr dest_addr;
+						dest_addr.s_addr = ip_header->ip_dst.s_addr;
+						char* dest_ip_str = inet_ntoa(dest_addr); // 转为字符串格式
+
+						// 比对拦截名单
+						for (int i = 0; i < blocked_count; i++)
+						{
+							if (strcmp(dest_ip_str, blocked_ips[i]) == 0)
+							{
+								drop_packet = true;
+								break;
+							}
+						}
+					}
+					// 命中拦截名单则丢弃，不执行后续转发
+					if (drop_packet)
+					{
+						continue;
+					}
+
+					// 【原有协议分发逻辑：完全未修改】
+					switch (packet.get_protocol())
+					{
+					case TUNMODE_PROTOCOL_TCP:
+						tcp_session_manager.handle_packet(packet);
+						break;
+
+					case TUNMODE_PROTOCOL_UDP:
+						udp_session_manager.handle_packet(packet);
+						break;
+
+					default:
+						break;
+					}
+				}
+				else
+				{
+					params::stop_flag.store(true);
+				}
+			}
+		}
+
+		_thread_stop();
+	}
+
+	void _run_loops()
+	{
+		std::thread tunnel_loop_thread(_tunnel_loop);
+		tunnel_loop_thread.detach();
+	}
+
+	void _cleanup()
+	{
+
+	}
+
+	void _tunnel_closed()
+	{
+		params::tun.close();
+		params::tun = 0;
+
+		if (params::TunModeService_object == 0) {
+			return;
+		}
+
+		JNIEnv* env = nullptr;
+		int status = get_jni_env(&env);
+
+		if (status == 2)
+		{
+			return;
+		}
+
+		jclass TunModeService_class = env->FindClass("git/gxosty/tunmode/interceptor/services/TunModeService");
+		jmethodID TunModeService_tunnelClosed_methodID = env->GetMethodID(
+			TunModeService_class,
+			"tunnelClosed",
+			"()V"
+		);
+
+		env->CallVoidMethod(params::TunModeService_object, TunModeService_tunnelClosed_methodID);
+
+		if (status == 1) {
+			params::jvm->DetachCurrentThread();
+		}
+	}
+
+	void open_tunnel()
+	{
+		params::stop_flag.store(false);
+		params::tunnel_promise = std::promise<void>();
+
+		std::future tunnel_future = params::tunnel_promise.get_future();
+
+		_run_loops();
+
+		LOGI_("----- [Tunnel opened] -----");
+		tunnel_future.wait();
+
+		_cleanup();
+		_tunnel_closed();
+		LOGI_("----- [Tunnel closed] -----");
+	}
+
+	void close_tunnel()
+	{
+		params::stop_flag.store(true);
+	}
 }
