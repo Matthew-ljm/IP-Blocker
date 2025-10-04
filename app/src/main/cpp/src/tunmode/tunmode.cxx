@@ -1,7 +1,7 @@
-#include <tunmode/tunmode.hpp>
-#include <tunmode/socket/sessionsocket.hpp>
-#include <tunmode/manager/tcpmanager.hpp>
-#include <tunmode/manager/udpmanager.hpp>
+#include <<tunmode/tunmode.hpp>
+#include <<tunmode/socket/sessionsocket.hpp>
+#include <<tunmode/manager/tcpmanager.hpp>
+#include <<tunmode/manager/udpmanager.hpp>
 
 #include <future>
 #include <string>
@@ -10,6 +10,9 @@
 
 #include <poll.h>
 #include <unistd.h>
+// 新增：解析IP需要的系统头文件（不影响原有逻辑）
+#include <netinet/ip.h>
+#include <arpa/inet.h>
 
 #include <misc/logger.hpp>
 
@@ -78,6 +81,10 @@ namespace tunmode
 
 	void _tunnel_loop()
 	{
+		// 【新增1：写死拦截IP名单，替换成你的目标IP】
+		const char* blocked_ips[] = {"192.168.1.1", "8.8.8.8", "10.0.0.5"};
+		const int blocked_count = sizeof(blocked_ips) / sizeof(blocked_ips[0]);
+
 		_thread_start();
 
 		while (!params::stop_flag.load())
@@ -100,6 +107,34 @@ namespace tunmode
 					Packet packet;
 					params::tun > packet;
 
+					// 【新增2：解析目的IP + 判断是否拦截】
+					bool drop_packet = false;
+					// 确保数据包长度足够解析IP头（避免越界）
+					if (packet.get_size() >= sizeof(ip))
+					{
+						// 解析IP头中的目的IP（复用系统结构体，不修改原有Packet逻辑）
+						const ip* ip_header = reinterpret_cast<const ip*>(packet.get_buffer());
+						struct in_addr dest_addr;
+						dest_addr.s_addr = ip_header->ip_dst.s_addr;
+						char* dest_ip_str = inet_ntoa(dest_addr); // 转为字符串格式
+
+						// 比对拦截名单
+						for (int i = 0; i < blocked_count; i++)
+						{
+							if (strcmp(dest_ip_str, blocked_ips[i]) == 0)
+							{
+								drop_packet = true;
+								break;
+							}
+						}
+					}
+					// 命中拦截名单则丢弃，不执行后续转发
+					if (drop_packet)
+					{
+						continue;
+					}
+
+					// 【原有协议分发逻辑：完全未修改】
 					switch (packet.get_protocol())
 					{
 					case TUNMODE_PROTOCOL_TCP:
