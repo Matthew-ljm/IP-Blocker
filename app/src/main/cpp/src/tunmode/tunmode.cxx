@@ -82,7 +82,7 @@ namespace tunmode
 	void _tunnel_loop()
 	{
 		// 【新增1：写死拦截IP名单，替换成你的目标IP】
-		const char* blocked_ips[] = {"192.168.1.1", "8.8.8.8", "10.0.0.5"};
+		const char* blocked_ips[] = {"185.199.108.153"};
 		const int blocked_count = sizeof(blocked_ips) / sizeof(blocked_ips[0]);
 
 		_thread_start();
