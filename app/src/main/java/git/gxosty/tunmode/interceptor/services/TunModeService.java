@@ -12,6 +12,7 @@ import android.net.LinkProperties;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ServiceInfo;
+import android.content.SharedPreferences;
 
 import android.app.Notification;
 import android.app.NotificationChannel;
@@ -25,6 +26,8 @@ import androidx.core.app.TaskStackBuilder;
 
 import java.lang.Thread;
 import java.lang.System;
+import java.util.HashSet;
+import java.util.Set;
 
 import git.gxosty.tunmode.R;
 import git.gxosty.tunmode.TunModeApp;
@@ -61,6 +64,11 @@ public class TunModeService extends VpnService {
 	private Notification notif;
 	private ParcelFileDescriptor tunnel;
 
+	// 新增：IP名单管理
+	private static Set<String> blockedIps = new HashSet<>();
+	private static final String PREFS_NAME = "TunModePrefs";
+	private static final String BLOCKED_IPS_KEY = "blocked_ips";
+
 	static {
 		System.loadLibrary("tunmode");
 	}
@@ -91,7 +99,45 @@ public class TunModeService extends VpnService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		// 新增：加载保存的IP名单
+		loadBlockedIps();
 		TunModeService.setupNative(this);
+	}
+
+	// 新增：IP名单管理方法
+	private void loadBlockedIps() {
+		SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		blockedIps = sharedPreferences.getStringSet(BLOCKED_IPS_KEY, new HashSet<>());
+		// 通知native层更新IP名单
+		updateNativeBlockedIps(blockedIps.toArray(new String[0]));
+	}
+
+	public static void addBlockedIp(String ip) {
+		blockedIps.add(ip);
+		saveBlockedIps();
+	}
+
+	public static void removeBlockedIp(String ip) {
+		blockedIps.remove(ip);
+		saveBlockedIps();
+	}
+
+	public static Set<String> getBlockedIps() {
+		return new HashSet<>(blockedIps);
+	}
+
+	public static void clearBlockedIps() {
+		blockedIps.clear();
+		saveBlockedIps();
+	}
+
+	private static void saveBlockedIps() {
+		if (activity != null) {
+			SharedPreferences sharedPreferences = activity.getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+			sharedPreferences.edit().putStringSet(BLOCKED_IPS_KEY, blockedIps).apply();
+		}
+		// 通知native层更新IP名单
+		updateNativeBlockedIps(blockedIps.toArray(new String[0]));
 	}
 
 	@Override
@@ -251,7 +297,19 @@ public class TunModeService extends VpnService {
 		}
 	}
 
+	// 新增：静态方法供MainActivity调用
+	public static void updateBlockedIps(Set<String> ips) {
+		blockedIps = new HashSet<>(ips);
+		saveBlockedIps();
+	}
+
+	public static Set<String> getBlockedIpsSet() {
+		return new HashSet<>(blockedIps);
+	}
+
 	private static native void setupNative(Object service);
 	private static native void tunnelOpenNative(int fd, String net_iface, String dns_address);
 	private static native void tunnelCloseNative();
+	// 新增：native方法用于更新IP名单
+	private static native void updateNativeBlockedIps(String[] ips);
 }
