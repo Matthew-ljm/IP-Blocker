@@ -10,7 +10,6 @@
 
 #include <poll.h>
 #include <unistd.h>
-// 新增：解析IP需要的系统头文件（不影响原有逻辑）
 #include <netinet/ip.h>
 #include <arpa/inet.h>
 
@@ -29,6 +28,9 @@ namespace tunmode
 
 		std::promise<void> tunnel_promise;
 		std::atomic<int> thread_count;
+        
+        // 存储拦截IP列表
+        std::vector<std::string> blocked_ips;
 	}
 
 	TCPManager tcp_session_manager;
@@ -45,10 +47,32 @@ namespace tunmode
 		SessionSocket::tun = &params::tun;
 		params::TunModeService_object = env->NewGlobalRef(TunModeService_object);
 
-
 		params::stop_flag.store(false);
 		params::thread_count.store(0);
+        
+        // 初始化时清空IP列表
+        params::blocked_ips.clear();
 	}
+
+    // 新增：从Java层获取拦截IP列表
+    void update_blocked_ips(JNIEnv* env, jobject thiz, jobjectArray ip_array) {
+        params::blocked_ips.clear();
+        
+        if (ip_array != nullptr) {
+            jsize length = env->GetArrayLength(ip_array);
+            for (jsize i = 0; i < length; i++) {
+                jstring ip_string = (jstring)env->GetObjectArrayElement(ip_array, i);
+                const char* ip_chars = env->GetStringUTFChars(ip_string, nullptr);
+                if (ip_chars != nullptr) {
+                    params::blocked_ips.push_back(std::string(ip_chars));
+                    env->ReleaseStringUTFChars(ip_string, ip_chars);
+                }
+                env->DeleteLocalRef(ip_string);
+            }
+        }
+        
+        LOGI_("Loaded %zu blocked IPs", params::blocked_ips.size());
+    }
 
 	int get_jni_env(JNIEnv** env)
 	{
@@ -81,10 +105,6 @@ namespace tunmode
 
 	void _tunnel_loop()
 	{
-		// 【新增1：写死拦截IP名单，替换成你的目标IP】
-		const char* blocked_ips[] = {"185.199.108.153"};
-		const int blocked_count = sizeof(blocked_ips) / sizeof(blocked_ips[0]);
-
 		_thread_start();
 
 		while (!params::stop_flag.load())
@@ -107,34 +127,33 @@ namespace tunmode
 					Packet packet;
 					params::tun > packet;
 
-					// 【新增2：解析目的IP + 判断是否拦截】
+					// 拦截逻辑
 					bool drop_packet = false;
-					// 确保数据包长度足够解析IP头（避免越界）
 					if (packet.get_size() >= sizeof(ip))
 					{
-						// 解析IP头中的目的IP（复用系统结构体，不修改原有Packet逻辑）
 						const ip* ip_header = reinterpret_cast<const ip*>(packet.get_buffer());
 						struct in_addr dest_addr;
 						dest_addr.s_addr = ip_header->ip_dst.s_addr;
-						char* dest_ip_str = inet_ntoa(dest_addr); // 转为字符串格式
+						char* dest_ip_str = inet_ntoa(dest_addr);
 
-						// 比对拦截名单
-						for (int i = 0; i < blocked_count; i++)
-						{
-							if (strcmp(dest_ip_str, blocked_ips[i]) == 0)
-							{
-								drop_packet = true;
-								break;
-							}
-						}
+                        // 检查是否在拦截列表中
+                        for (const auto& blocked_ip : params::blocked_ips)
+                        {
+                            if (strcmp(dest_ip_str, blocked_ip.c_str()) == 0)
+                            {
+                                drop_packet = true;
+                                LOGI_("Blocked packet to: %s", dest_ip_str);
+                                break;
+                            }
+                        }
 					}
-					// 命中拦截名单则丢弃，不执行后续转发
+
 					if (drop_packet)
 					{
 						continue;
 					}
 
-					// 【原有协议分发逻辑：完全未修改】
+					// 原有逻辑保持不变
 					switch (packet.get_protocol())
 					{
 					case TUNMODE_PROTOCOL_TCP:
