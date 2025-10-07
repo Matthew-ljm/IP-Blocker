@@ -1,4 +1,4 @@
-package git.gxosty.tunmode;
+package com.matthew.ipblocker;
 
 import android.app.Application;
 import android.app.NotificationChannel;

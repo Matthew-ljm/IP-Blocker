@@ -1,4 +1,4 @@
-package git.gxosty.tunmode.interceptor.activities;
+package com.matthew.ipblocker.interceptor.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,8 +12,8 @@ import android.view.View;
 
 import android.os.Bundle;
 
-import git.gxosty.tunmode.R;
-import git.gxosty.tunmode.interceptor.services.TunModeService;
+import com.matthew.ipblocker.R;
+import com.matthew.ipblocker.interceptor.services.TunModeService;
 
 public class MainActivity extends AppCompatActivity implements TunModeService.EventListener {
 

@@ -41,7 +41,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
+			"path" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeSystem.cmake"
 		},
 		{
 			"isExternal" : true,
@@ -307,7 +307,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -541,7 +541,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -692,7 +692,7 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
+			"path" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCCompiler.cmake"
 		},
 		{
 			"isCMake" : true,
@@ -786,14 +786,14 @@
 		},
 		{
 			"isGenerated" : true,
-			"path" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
+			"path" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/armeabi-v7a/CMakeFiles/3.22.1-g37088a8-dirty/CMakeCXXCompiler.cmake"
 		}
 	],
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/armeabi-v7a",
-		"source" : "C:/Users/huife/Desktop/VPN-test/app/src/main/cpp"
+		"build" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/armeabi-v7a",
+		"source" : "C:/Users/huife/IP-Blocker/app/src/main/cpp"
 	},
 	"version" : 
 	{

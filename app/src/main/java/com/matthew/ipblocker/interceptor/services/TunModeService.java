@@ -1,4 +1,4 @@
-package git.gxosty.tunmode.interceptor.services;
+package com.matthew.ipblocker.interceptor.services;
 
 import android.os.Build;
 import android.os.ParcelFileDescriptor;
@@ -26,8 +26,8 @@ import androidx.core.app.TaskStackBuilder;
 import java.lang.Thread;
 import java.lang.System;
 
-import git.gxosty.tunmode.R;
-import git.gxosty.tunmode.TunModeApp;
+import com.matthew.ipblocker.R;
+import com.matthew.ipblocker.TunModeApp;
 
 public class TunModeService extends VpnService {
 	/**

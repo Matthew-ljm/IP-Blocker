@@ -3,12 +3,12 @@ plugins {
 }
 
 android {
-    namespace 'git.gxosty.tunmode'
+    namespace 'com.matthew.ipblocker'
     compileSdk 34
     ndkVersion "27.2.12479018"
 
     defaultConfig {
-        applicationId "git.gxosty.tunmode"
+        applicationId "com.matthew.ipblocker"
         minSdk 21
         targetSdk 34
         versionCode 1
