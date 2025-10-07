@@ -18,3 +18,7 @@
 15	7674	7815167691129229	CMakeFiles/tunmode.dir/src/tunmode/tunmode.cxx.o	e3c3333a0985d7d1
 5721	8746	7815167702000389	CMakeFiles/tunmode.dir/src/tunmode/socket/udpsocket.cxx.o	e6a500e6de7120f5
 8746	9018	7815167704758235	C:/Users/huife/Desktop/VPN-test/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so	1ff6c7aaf4475adf
+26	5452	7815199366165299	CMakeFiles/tunmode.dir/src/tunmode/tunmode.cxx.o	e3c3333a0985d7d1
+5454	5937	7815199370987203	C:/Users/huife/Desktop/VPN-test/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so	1ff6c7aaf4475adf
+14	4641	7815207653145197	CMakeFiles/tunmode.dir/src/tunmode/tunmode.cxx.o	e3c3333a0985d7d1
+4642	4880	7815207655620350	C:/Users/huife/Desktop/VPN-test/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so	1ff6c7aaf4475adf

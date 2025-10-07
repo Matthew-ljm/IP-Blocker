@@ -1,0 +1,20 @@
+# ninja log v5
+23	176	7815207676424707	CMakeFiles/tunmode.dir/src/tunmode/common/inbuffer.cxx.o	9f6f3e687cef5e0b
+31	280	7815207677335977	CMakeFiles/tunmode.dir/src/tunmode/common/packet.cxx.o	7188d291d4347a34
+15	542	7815207680004771	CMakeFiles/tunmode.dir/src/tunmode/common/buffer.cxx.o	c622962e4a85d2e4
+545	930	7815207683903501	CMakeFiles/tunmode.dir/src/tunmode/socket/socket.cxx.o	d5fae56f067eab2b
+68	3478	7815207708953312	CMakeFiles/tunmode.dir/src/tunmode/manager/sessionmanager.cxx.o	6917b230d9e59262
+3507	4272	7815207717011722	CMakeFiles/tunmode.dir/src/tunmode/socket/sessionsocket.cxx.o	391c74ce48daa01
+281	4515	7815207719151766	CMakeFiles/tunmode.dir/src/tunmode/manager/udpmanager.cxx.o	2e4c48b8ab96f4b
+4276	4943	7815207723749676	CMakeFiles/tunmode.dir/src/tunmode/socket/tunsocket.cxx.o	ac2f7ffd1b3b3941
+41	5164	7815207725616648	CMakeFiles/tunmode.dir/src/tunmode/session/session.cxx.o	82064220b4546e74
+4520	5237	7815207726812744	CMakeFiles/tunmode.dir/src/RawSocket/CheckSum.cpp.o	e0bf5021131a0bb8
+931	5357	7815207727799863	CMakeFiles/tunmode.dir/src/tunmode/manager/tcpmanager.cxx.o	b17db610f37a0af2
+7	5564	7815207729983671	CMakeFiles/tunmode.dir/main.cxx.o	e7d16b545df3b1cd
+81	5616	7815207730440340	CMakeFiles/tunmode.dir/src/tunmode/socket/tcpsocket.cxx.o	d24aae584a24ec22
+50	5985	7815207734194904	CMakeFiles/tunmode.dir/src/tunmode/common/utils.cxx.o	fb954264ec793d0a
+59	6205	7815207736359981	CMakeFiles/tunmode.dir/src/tunmode/session/udpsession.cxx.o	8d8947b632ea009
+178	6513	7815207739497820	CMakeFiles/tunmode.dir/src/tunmode/session/tcpsession.cxx.o	b5153ab5bee71f0d
+1	7560	7815207749887420	CMakeFiles/tunmode.dir/src/tunmode/tunmode.cxx.o	4af7916e12a3826a
+4951	8786	7815207762270239	CMakeFiles/tunmode.dir/src/tunmode/socket/udpsocket.cxx.o	1e75b4fd92fed330
+8787	9105	7815207765431480	C:/Users/huife/Desktop/VPN-test/app/build/intermediates/cxx/Debug/471b1x4d/obj/armeabi-v7a/libtunmode.so	be2b7d50912aad49
