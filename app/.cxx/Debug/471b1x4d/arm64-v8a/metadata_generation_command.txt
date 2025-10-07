@@ -1,0 +1,21 @@
+                        -HC:\Users\huife\Desktop\VPN-test\app\src\main\cpp
+-DCMAKE_SYSTEM_NAME=Android
+-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+-DCMAKE_SYSTEM_VERSION=21
+-DANDROID_PLATFORM=android-21
+-DANDROID_ABI=arm64-v8a
+-DCMAKE_ANDROID_ARCH_ABI=arm64-v8a
+-DANDROID_NDK=C:\Users\huife\AppData\Local\Android\Sdk\ndk\27.2.12479018
+-DCMAKE_ANDROID_NDK=C:\Users\huife\AppData\Local\Android\Sdk\ndk\27.2.12479018
+-DCMAKE_TOOLCHAIN_FILE=C:\Users\huife\AppData\Local\Android\Sdk\ndk\27.2.12479018\build\cmake\android.toolchain.cmake
+-DCMAKE_MAKE_PROGRAM=C:\Users\huife\AppData\Local\Android\Sdk\cmake\3.22.1\bin\ninja.exe
+-DCMAKE_CXX_FLAGS=-std=c++23
+-DCMAKE_LIBRARY_OUTPUT_DIRECTORY=C:\Users\huife\Desktop\VPN-test\app\build\intermediates\cxx\Debug\471b1x4d\obj\arm64-v8a
+-DCMAKE_RUNTIME_OUTPUT_DIRECTORY=C:\Users\huife\Desktop\VPN-test\app\build\intermediates\cxx\Debug\471b1x4d\obj\arm64-v8a
+-DCMAKE_BUILD_TYPE=Debug
+-BC:\Users\huife\Desktop\VPN-test\app\.cxx\Debug\471b1x4d\arm64-v8a
+-GNinja
+-DANDROID_ARM_NEON=TRUE
+-DANDROID_STL=c++_shared
+                        Build command args: []
+                        Version: 2
