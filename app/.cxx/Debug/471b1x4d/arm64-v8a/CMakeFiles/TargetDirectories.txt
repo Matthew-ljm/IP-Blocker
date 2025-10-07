@@ -1,3 +1,3 @@
-C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/arm64-v8a/CMakeFiles/tunmode.dir
-C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/arm64-v8a/CMakeFiles/edit_cache.dir
-C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/arm64-v8a/CMakeFiles/rebuild_cache.dir
+C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/arm64-v8a/CMakeFiles/tunmode.dir
+C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/arm64-v8a/CMakeFiles/rebuild_cache.dir

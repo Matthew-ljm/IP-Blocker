@@ -1,19 +1,19 @@
 {
   "buildFiles": [
-    "C:\\Users\\huife\\Desktop\\VPN-test\\app\\src\\main\\cpp\\CMakeLists.txt"
+    "C:\\Users\\huife\\IP-Blocker\\app\\src\\main\\cpp\\CMakeLists.txt"
   ],
   "cleanCommandsComponents": [
     [
       "C:\\Users\\huife\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
       "-C",
-      "C:\\Users\\huife\\Desktop\\VPN-test\\app\\.cxx\\Debug\\471b1x4d\\arm64-v8a",
+      "C:\\Users\\huife\\IP-Blocker\\app\\.cxx\\Debug\\471b1x4d\\arm64-v8a",
       "clean"
     ]
   ],
   "buildTargetsCommandComponents": [
     "C:\\Users\\huife\\AppData\\Local\\Android\\Sdk\\cmake\\3.22.1\\bin\\ninja.exe",
     "-C",
-    "C:\\Users\\huife\\Desktop\\VPN-test\\app\\.cxx\\Debug\\471b1x4d\\arm64-v8a",
+    "C:\\Users\\huife\\IP-Blocker\\app\\.cxx\\Debug\\471b1x4d\\arm64-v8a",
     "{LIST_OF_TARGETS_TO_BUILD}"
   ],
   "libraries": {
@@ -21,7 +21,7 @@
       "toolchain": "toolchain",
       "abi": "arm64-v8a",
       "artifactName": "tunmode",
-      "output": "C:\\Users\\huife\\Desktop\\VPN-test\\app\\build\\intermediates\\cxx\\Debug\\471b1x4d\\obj\\arm64-v8a\\libtunmode.so",
+      "output": "C:\\Users\\huife\\IP-Blocker\\app\\build\\intermediates\\cxx\\Debug\\471b1x4d\\obj\\arm64-v8a\\libtunmode.so",
       "runtimeFiles": []
     }
   },

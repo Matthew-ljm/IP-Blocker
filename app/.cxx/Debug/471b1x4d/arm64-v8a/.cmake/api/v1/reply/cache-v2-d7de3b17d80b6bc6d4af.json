@@ -175,7 +175,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "c:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/arm64-v8a"
+			"value" : "c:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -727,7 +727,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "C:/Users/huife/Desktop/VPN-test/app/src/main/cpp"
+			"value" : "C:/Users/huife/IP-Blocker/app/src/main/cpp"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -763,7 +763,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\huife\\Desktop\\VPN-test\\app\\build\\intermediates\\cxx\\Debug\\471b1x4d\\obj\\arm64-v8a"
+			"value" : "C:\\Users\\huife\\IP-Blocker\\app\\build\\intermediates\\cxx\\Debug\\471b1x4d\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_LINKER",
@@ -1035,7 +1035,7 @@
 				}
 			],
 			"type" : "UNINITIALIZED",
-			"value" : "C:\\Users\\huife\\Desktop\\VPN-test\\app\\build\\intermediates\\cxx\\Debug\\471b1x4d\\obj\\arm64-v8a"
+			"value" : "C:\\Users\\huife\\IP-Blocker\\app\\build\\intermediates\\cxx\\Debug\\471b1x4d\\obj\\arm64-v8a"
 		},
 		{
 			"name" : "CMAKE_SHARED_LINKER_FLAGS",
@@ -1307,7 +1307,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/huife/Desktop/VPN-test/app/.cxx/Debug/471b1x4d/arm64-v8a"
+			"value" : "C:/Users/huife/IP-Blocker/app/.cxx/Debug/471b1x4d/arm64-v8a"
 		},
 		{
 			"name" : "TunMode_IS_TOP_LEVEL",
@@ -1331,7 +1331,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "C:/Users/huife/Desktop/VPN-test/app/src/main/cpp"
+			"value" : "C:/Users/huife/IP-Blocker/app/src/main/cpp"
 		},
 		{
 			"name" : "tunmode_LIB_DEPENDS",

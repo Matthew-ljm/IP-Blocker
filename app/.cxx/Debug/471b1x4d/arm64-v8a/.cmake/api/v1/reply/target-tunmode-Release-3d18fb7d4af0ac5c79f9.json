@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "C:/Users/huife/Desktop/VPN-test/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so"
+			"path" : "C:/Users/huife/IP-Blocker/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so"
 		}
 	],
 	"backtrace" : 1,
@@ -88,15 +88,15 @@
 			[
 				{
 					"backtrace" : 4,
-					"path" : "C:/Users/huife/Desktop/VPN-test/app/src/main/cpp/include"
+					"path" : "C:/Users/huife/IP-Blocker/app/src/main/cpp/include"
 				},
 				{
 					"backtrace" : 5,
-					"path" : "C:/Users/huife/Desktop/VPN-test/app/src/main/cpp/src"
+					"path" : "C:/Users/huife/IP-Blocker/app/src/main/cpp/src"
 				},
 				{
 					"backtrace" : 6,
-					"path" : "C:/Users/huife/Desktop/VPN-test/app/src/main/cpp/src/internal"
+					"path" : "C:/Users/huife/IP-Blocker/app/src/main/cpp/src/internal"
 				}
 			],
 			"language" : "CXX",
