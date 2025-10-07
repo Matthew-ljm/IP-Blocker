@@ -18,3 +18,6 @@
 18	11548	7815242178424817	CMakeFiles/tunmode.dir/src/tunmode/tunmode.cxx.o	f491ebcde7ded86b
 9840	13390	7815242196741123	CMakeFiles/tunmode.dir/src/tunmode/socket/udpsocket.cxx.o	6bfecf41a886ecbd
 13391	13711	7815242200067085	C:/Users/huife/IP-Blocker/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so	c1a86a59b4d112d7
+25	3550	7815251358792545	CMakeFiles/tunmode.dir/main.cxx.o	84a98d8f8de723e1
+42	3930	7815251362780452	CMakeFiles/tunmode.dir/src/tunmode/tunmode.cxx.o	f491ebcde7ded86b
+3931	4164	7815251365002813	C:/Users/huife/IP-Blocker/app/build/intermediates/cxx/Debug/471b1x4d/obj/arm64-v8a/libtunmode.so	c1a86a59b4d112d7

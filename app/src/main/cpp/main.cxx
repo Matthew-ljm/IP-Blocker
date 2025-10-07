@@ -12,7 +12,7 @@
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_git_gxosty_tunmode_interceptor_services_TunModeService_tunnelOpenNative(JNIEnv* env, jclass cls, int fd, jstring net_iface, jstring dns_address)
+Java_com_matthew_ipblocker_interceptor_services_TunModeService_tunnelOpenNative(JNIEnv* env, jclass cls, int fd, jstring net_iface, jstring dns_address)
 {
 	tunmode::params::tun = fd;
 	tunmode::params::dns_address.s_addr = 0;
@@ -43,14 +43,14 @@ Java_git_gxosty_tunmode_interceptor_services_TunModeService_tunnelOpenNative(JNI
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_git_gxosty_tunmode_interceptor_services_TunModeService_tunnelCloseNative(JNIEnv* env, jclass cls)
+Java_com_matthew_ipblocker_interceptor_services_TunModeService_tunnelCloseNative(JNIEnv* env, jclass cls)
 {
 	tunmode::close_tunnel();
 }
 
 extern "C"
 JNIEXPORT void JNICALL
-Java_git_gxosty_tunmode_interceptor_services_TunModeService_setupNative(JNIEnv* env, jclass cls, jobject TunModeService_object)
+Java_com_matthew_ipblocker_interceptor_services_TunModeService_setupNative(JNIEnv* env, jclass cls, jobject TunModeService_object)
 {
 	tunmode::initialize(env, TunModeService_object);
 }

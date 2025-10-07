@@ -213,7 +213,7 @@ namespace tunmode
             return;
         }
 
-        jclass TunModeService_class = env->FindClass("git/gxosty/tunmode/interceptor/services/TunModeService");
+        jclass TunModeService_class = env->FindClass("com/matthew/ipblocker/interceptor/services/TunModeService");
         jmethodID TunModeService_tunnelClosed_methodID = env->GetMethodID(
                 TunModeService_class,
                 "tunnelClosed",
@@ -252,7 +252,7 @@ namespace tunmode
 
 // JNI导出函数 - 修改为MainActivity的方法
 extern "C" JNIEXPORT void JNICALL
-Java_git_gxosty_tunmode_interceptor_activities_MainActivity_setBlockedIPsNative(
+Java_com_matthew_ipblocker_interceptor_activities_MainActivity_setBlockedIPsNative(
         JNIEnv* env,
         jobject thiz,
         jstring j_blocked_ips) {
