@@ -26,11 +26,11 @@ IP-Blocker 是一款基于 Android VPN 技术的网络拦截工具，能够精�
    - 后台服务运行，支持长时间稳定工作
    - 兼容 Android 主流版本系统
 
-## 技术实现说明
+## VPN技术实现说明
 
 本项目的 VPN 核心实现参考了 [TunMode](https://github.com/gxosty/TunMode) 开源项目，主要基于以下技术栈构建：
 
-- **底层框架**：C++ 实现核心数据包处理逻辑，使用 C++20 标准
+- **底层框架**：C++ 实现核心数据包处理逻辑
 - **JNI 桥接**：通过 JNI 实现 Java 与 C++ 层的交互
 - **网络协议**：基于 TUN 设备实现 IP 层数据包拦截与处理
 - **多线程管理**：采用线程池与异步处理机制，保证高并发场景下的稳定性
@@ -38,7 +38,8 @@ IP-Blocker 是一款基于 Android VPN 技术的网络拦截工具，能够精�
 ## 下载与安装
 
 v1.0 版本已发布，可通过以下链接下载：
-[IP-Blocker v1.0 下载](https://example.com/ip-blocker-v1.0.apk)  
+- [IP-Blocker v1.0 GitHub Release 下载](https://github.com/gxosty/TunMode/releases/tag/v0.1)
+- [IP-Blocker v1.0 开发者个人网站下载](https://m-code.top/software/IP%E6%8B%A6%E6%88%AA%E5%99%A8.apk)  
 
 ## 使用方法
 
