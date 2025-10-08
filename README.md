@@ -38,7 +38,7 @@ IP-Blocker 是一款基于 Android VPN 技术的网络拦截工具，能够精�
 ## 下载与安装
 
 v1.0 版本已发布，可通过以下链接下载：
-- [IP-Blocker v1.0 GitHub Release 下载](https://github.com/gxosty/TunMode/releases/tag/v0.1)
+- [IP-Blocker v1.0 GitHub Release 下载](https://github.com/Matthew-ljm/IP-Blocker/releases/tag/v1.0)
 - [IP-Blocker v1.0 开发者个人网站下载](https://m-code.top/software/IP%E6%8B%A6%E6%88%AA%E5%99%A8.apk)  
 
 ## 使用方法
