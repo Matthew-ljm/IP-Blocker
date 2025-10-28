@@ -1,0 +1,30 @@
+# 1. Gradle 相关
+.gradle/
+/build/
+gradle/wrapper/gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.properties
+
+# 2. Android Studio IDE 配置
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+local.properties
+
+# 3. app 模块构建产物与临时文件
+app/.cxx/
+app/build/
+app/release/
+app/debug/
+app/build/tmp/
+
+# 4. 系统与临时文件
+.DS_Store
+Thumbs.db
+*.log
+*.bak
+*~
+
+# 5. GitHub Actions 工作流
+.github/workflows/
